@@ -14,7 +14,7 @@ def HandleChoice(menuOption):
         case 3:
             Option3()
         case 4:
-            print("TBA")
+            Option4()
         case 5:
             print("TBA")
         case 6:
@@ -31,6 +31,9 @@ def SpecifedDate(CompletedYear, ReturnedData):
     for data in ReturnedData:
         if data['date'] == CompletedYear:
             entries.append(data)
+        else:
+            print("\033[91m" + "Unknown Entry Entered, Please Try Again" + "\033[0m")
+            Option1()
     print("\n\033[4m" + "Top 5 Songs on " + CompletedYear + "\033[0m\n")
     for d in entries[:5]:
         print("Rank:", d['rank'])
@@ -127,6 +130,46 @@ def LongestCharters(ReturnedData):
     else:
         print("\033[91m" + "Unknown entry entered, exiting..." + "\033[0m")
         exit()
+
+# Option 4 setup
+def Option4():
+    print("\n\033[4m" + "Top 5 biggest climbers:" + "\033[0m\n")
+    ReturnedData = HandleData()
+    BiggestChanges(ReturnedData)
+
+# Option 4 Technical Execution and Return
+def BiggestChanges(ReturnedData):
+    entries = []
+    for d in ReturnedData:
+        d['climb'] = 1
+        entries.append(d)
+    for d in entries:
+        r = int(d['rank'])
+        if d['last-week'] == '':
+            pos = 101
+        else:   
+            pos = int(d['last-week'])
+        c = int(d['climb'])
+        if r < pos:
+            climb = pos - r
+            d.update({'climb': climb})
+    SortedEntries = sorted(entries, key=lambda x: x['climb'], reverse=True)
+    for d in SortedEntries[:5]:
+        print("-", "Song:", d['song'])
+        print("-", "artist:", d['artist'], "\n")
+    restartOption = int(input("\nNext action:\n1) Try Again.\n2) Main Menu\n3) Exit\nSelection: "))
+    if restartOption == 1:
+        Option4()
+    elif restartOption == 2:
+        Start()
+    elif restartOption == 3:
+        print("\033[91m" + "Exiting..." + "\033[0m")
+        exit()
+    else:
+        print("\033[91m" + "Unknown entry entered, exiting..." + "\033[0m")
+        exit()
+
+
         
 def Start():
     print("\n\033[4m" + "Billboard Top 100 Songs Search:" + "\033[0m\n")

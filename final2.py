@@ -78,7 +78,8 @@ def MostSuccessfulArtist(ReturnedData):
         else:
             SuccessChart[e] = 1
     SortedChart = sorted(SuccessChart.items(), key=lambda x: x[1], reverse=True)
-    print(SortedChart[0][0], "with", SortedChart[0][1], "number 1 hits")
+    print("Artist:", SortedChart[0][0])
+    print("Total Number One Hits:", SortedChart[0][1])
     restartOption = int(input("\n\nNext action:\n1) Try Again.\n2) Main Menu\n3) Exit\nSelection: "))
     if restartOption == 1:
         Option2()

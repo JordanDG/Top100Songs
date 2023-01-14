@@ -16,40 +16,13 @@ def HandleChoice(menuOption):
         case 4:
             Option4()
         case 5:
-            print("TBA")
+            Option5()
         case 6:
             print("\033[91m" + "Exiting..." + "\033[0m")
             exit()
         case _:
             print("\n\n\033[91m" + "Error: " + "\033[0m" + "Invalid Selection Made, Please Try Again!")
-            print("TBA")
-
-
-# Option 1 technical execution and return.
-def SpecifedDate(CompletedYear, ReturnedData):
-    entries = []
-    for data in ReturnedData:
-        if data['date'] == CompletedYear:
-            entries.append(data)
-        else:
-            print("\033[91m" + "Unknown Entry Entered, Please Try Again" + "\033[0m")
-            Option1()
-    print("\n\033[4m" + "Top 5 Songs on " + CompletedYear + "\033[0m\n")
-    for d in entries[:5]:
-        print("Rank:", d['rank'])
-        print("Song:", d['song'])
-        print("Artist:", d['artist'], "\n")
-    restartOption = int(input("\n\nNext action:\n1) Try Again.\n2) Main Menu\n3) Exit\nSelection: "))
-    if restartOption == 1:
-        Option1()
-    elif restartOption == 2:
-        Start()
-    elif restartOption == 3:
-        print("\033[91m" + "Exiting..." + "\033[0m")
-        exit()
-    else:
-        print("\033[91m" + "Unknown entry entered, exiting..." + "\033[0m")
-        exit()
+            Start()
 
 # Option 1 setup
 def Option1():
@@ -60,6 +33,32 @@ def Option1():
     Day = (input("Enter a Day: "))
     CompletedYear = str(Year) + "-" + str(Month) + "-" + str(Day)
     SpecifedDate(CompletedYear, ReturnedData)
+
+# Option 1 technical execution and return.
+def SpecifedDate(CompletedYear, ReturnedData):
+    entries = []
+    for data in ReturnedData:
+        if data['date'] == CompletedYear:
+            entries.append(data)
+    if len(entries) == 0:
+        print("\n\n\033[91m" + "Error: " + "\033[0m" + "Invalid Search Made, Please Try Again!")
+        Option1()
+    print("\n\033[4m" + "Top 5 Songs on " + CompletedYear + "\033[0m\n")
+    for d in entries[:5]:
+        print("Rank:", d['rank'])
+        print("Song:", d['song'])
+        print("Artist:", d['artist'], "\n")
+    restartOption = int(input("\nNext action:\n1) Try Again.\n2) Main Menu\n3) Exit\nSelection: "))
+    if restartOption == 1:
+        Option1()
+    elif restartOption == 2:
+        Start()
+    elif restartOption == 3:
+        print("\033[91m" + "Exiting..." + "\033[0m")
+        exit()
+    else:
+        print("\n\033[91m" + "Error: " + "\033[0m" + "Invalid Selection Made, Exiting...")
+        exit()
 
 # Option 2 setup
 def Option2():
@@ -92,7 +91,7 @@ def MostSuccessfulArtist(ReturnedData):
         print("\033[91m" + "Exiting..." + "\033[0m")
         exit()
     else:
-        print("\033[91m" + "Unknown entry entered, exiting..." + "\033[0m")
+        print("\n\033[91m" + "Error: " + "\033[0m" + "Invalid Selection Made, Exiting...")
         exit()
 
 
@@ -128,7 +127,7 @@ def LongestCharters(ReturnedData):
         print("\033[91m" + "Exiting..." + "\033[0m")
         exit()
     else:
-        print("\033[91m" + "Unknown entry entered, exiting..." + "\033[0m")
+        print("\n\033[91m" + "Error: " + "\033[0m" + "Invalid Selection Made, Exiting...")
         exit()
 
 # Option 4 setup
@@ -166,14 +165,46 @@ def BiggestChanges(ReturnedData):
         print("\033[91m" + "Exiting..." + "\033[0m")
         exit()
     else:
-        print("\033[91m" + "Unknown entry entered, exiting..." + "\033[0m")
+        print("\n\033[91m" + "Error: " + "\033[0m" + "Invalid Selection Made, Exiting...")
         exit()
 
+# Option 5 setup
+def Option5():
+    print("\n\033[4m" + "Search Number Ones By Song:" + "\033[0m\n")
+    SongSearchString = (input("Enter a Song Name: ")).title()
+    ReturnedData = HandleData()
+    SongSearch(ReturnedData, SongSearchString)
 
-        
+# Option 5 Technical Execution and Return
+def SongSearch(ReturnedData, SongSearchString):
+    entries = []
+    for data in ReturnedData:
+        if data['song'] == SongSearchString and data['rank'] == "1":
+            entries.append(data)
+    if len(entries) == 0:
+        print("\n\n\033[91m" + "Error: " + "\033[0m" + "Invalid Search Made, Please Try Again!")
+        Option5()
+    print("\n\033[4m" + "Search Results For " + SongSearchString + "\033[0m\n")
+    for d in entries[:10]:
+        print("-", "Rank:", d['rank'])
+        print("-", "Date:", d['date'])
+        print("-", "Artist:", d['artist'], "\n")
+    restartOption = int(input("\nNext action:\n1) Try Again.\n2) Main Menu\n3) Exit\nSelection: "))
+    if restartOption == 1:
+        Option5()
+    elif restartOption == 2:
+        Start()
+    elif restartOption == 3:
+        print("\033[91m" + "Exiting..." + "\033[0m")
+        exit()
+    else:
+        print("\n\033[91m" + "Error: " + "\033[0m" + "Invalid Selection Made, Exiting...")
+        exit()
+    
+
 def Start():
     print("\n\033[4m" + "Billboard Top 100 Songs Search:" + "\033[0m\n")
-    menuOption = int(input("Please choose your action to take (in the format of 1-6):\n1) Top 5 Songs By Day\n2) Most Successful Artist\n3) Top 10 Longest Charters\n4) Most Improved Song\n5) Top Songs\n6) Exit\n" + "\033[1m" + "\nSelection: " + "\033[1m"))
+    menuOption = int(input("Please choose your action to take (in the format of 1-6):\n1) Top 5 Songs By Day\n2) Most Successful Artist\n3) Top 10 Longest Charters\n4) Most Improved Song\n5) Song Search\n6) Exit\n" + "\033[1m" + "\nSelection: " + "\033[1m"))
     HandleChoice(menuOption)
 
 Start()
